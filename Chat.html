@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>チャット / Guestbook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    /* Body styles */
+    body {
+      font-family: 'VT323', monospace;
+      font-size: 22px;
+      background-image: url('IMG_5019.JPEG');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 1rem;
+      color: #fff;
+    }
+
+    /* Title */
+    h1 {
+      text-shadow: 1px 1px 4px #785f8d;
+      text-align: center;
+    }
+
+    /* Chat container */
+    #chat {
+      background: rgba(0,0,0,0.7);
+      border: 2px solid #785f8d;
+      height: 90vh;
+      overflow-y: auto;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .message {
+      margin: 0.5rem 0;
+    }
+
+    .message-user {
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    .timestamp {
+      color: #ccc;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+
+    #controls {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    #user, #text {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #send {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background: #785f8d;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #send:hover {
+      background: #5e3a6b;
+    }
+
+    /* Media embeds */
+    .chat-image,
+    .chat-video,
+    .chat-iframe {
+      max-width: 320px;
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+      margin-top: 0.3rem;
+    }
+  </style>
+
+  <!-- Firebase SDKs (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD03ltXt6iLWC_FgjfQHznOs6VVaxh2Bzk",
+      authDomain: "neocities-chat-f1bc7.firebaseapp.com",
+      databaseURL: "https://neocities-chat-f1bc7-default-rtdb.firebaseio.com",
+      projectId: "neocities-chat-f1bc7",
+      storageBucket: "neocities-chat-f1bc7.appspot.com",
+      messagingSenderId: "751201092011",
+      appId: "1:751201092011:web:d5877c3de9e468892f12ee"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+<body>
+  <h1>チャット / Guestbook</h1>
+  <p>Hello!!! This is the Chat/guestbook. You can send messages or media links (images, gifs, YouTube). Thanks for visiting!</p>
+
+  <div id="chat"></div>
+  <div id="controls">
+    <input id="user" type="text" placeholder="Your name">
+    <input id="text" type="text" placeholder="Your message (or media URL)">
+    <button id="send">Post</button>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById('chat');
+    const userInput = document.getElementById('user');
+    const textInput = document.getElementById('text');
+    const sendBtn = document.getElementById('send');
+
+    firebase.database().ref('guestbook')
+      .orderByChild('ts')
+      .limitToLast(200)
+      .on('child_added', snap => {
+        const msg = snap.val();
+        const el = document.createElement('div');
+        el.className = 'message';
+        const time = new Date(msg.ts).toLocaleString();
+
+        let content = msg.text;
+
+        // Image
+        if (/\.(gif|png|jpe?g)$/i.test(msg.text)) {
+          content = `<img src="${msg.text}" class="chat-image">`;
+        }
+        // Video
+        else if (/\.(mp4|webm)(\?.*)?$/i.test(msg.text)) {
+          content = `<video src="${msg.text}" class="chat-video" controls autoplay loop muted></video>`;
+        }
+        // YouTube
+        else if (/youtu(?:\.be|be\.com)/.test(msg.text)) {
+          const m = msg.text.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+          if (m && m[1]) {
+            const id = m[1];
+            content = `
+              <iframe class="chat-iframe" height="180"
+                      src="https://www.youtube.com/embed/${id}"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+              <div>
+                <a href="https://youtu.be/${id}" target="_blank"
+                   style="color:#fff;font-size:0.8rem;">▶ Watch on YouTube</a>
+              </div>
+            `;
+          }
+        }
+
+        el.innerHTML = `
+          <span class="message-user">${msg.user}:</span>
+          <span class="message-text">${content}</span>
+          <span class="timestamp">${time}</span>
+        `;
+        chatBox.append(el);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+
+    sendBtn.addEventListener('click', () => {
+      const user = userInput.value.trim() || 'Anonymous';
+      const text = textInput.value.trim();
+      if (!text) return;
+      firebase.database().ref('guestbook').push({ user, text, ts: Date.now() });
+      textInput.value = '';
+      textInput.focus();
+    });
+
+    textInput.addEventListener('keyup', e => {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+  </script>
+</body>
+</html>
+

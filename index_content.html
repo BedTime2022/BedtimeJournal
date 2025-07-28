@@ -1,0 +1,117 @@
+<html>
+    <head> 
+        <meta charset="UTF-8"> <!-- Add this line -->
+        <!-- Add Google Fonts link for VT323 -->
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'VT323', monospace;
+                font-size: 22px;
+                 background-image: url('Backgrounds/background_second.png');
+            }
+            h1, h2 {
+                color: #fff;
+                text-shadow: 1px 1px 4px #785f8d;
+                font-family: 'VT323', monospace;
+            }
+            p, li {
+                color: #fff;
+                display: inline-block;
+                background: rgba(0, 0, 0, 0.7);
+                padding: 6px 12px;
+                border-radius: 6px;
+                margin-bottom: 8px;
+                font-family: 'VT323', monospace;
+            }
+            a {
+                color: #ffd700;
+                font-family: 'VT323', monospace;
+                text-decoration: none;
+                border-bottom: 2px dashed #ffd700;
+                padding: 2px 4px;
+                border-radius: 4px;
+                transition: 
+                    background 0.2s,
+                    color 0.2s,
+                    transform 0.2s;
+                display: inline-block;
+            }
+            a:hover {
+                background: #ffd700;
+                color: #222;
+                transform: translateY(-3px) scale(1.07) rotate(-2deg);
+                border-bottom: 2px solid #ffd700;
+            }
+            #nav {
+                margin-bottom: 16px;
+            }
+            #player {
+                margin-bottom: 16px;
+            }
+            iframe {
+                width: 100%;
+                height: 70vh;
+                border: none;
+                background: transparent;
+            }
+        </style>
+    </head>
+<body>
+<h2>My socials</h2>
+<ul>
+    
+    <li><a href="https://www.youtube.com/@BedTime2025" target="_blank">My YouTube Channel</a></li>
+    <li><a href="https://soundcloud.com/derkatze2022" target="_blank">My SoundCloud</a></li>
+</ul>
+<h2>Who's BedTime?</h2>
+<p>I'm a (as of July 2025) recently high school graduate that found a challenge to himself and is excited to work on getting accomplished his little projects in the summer.</p>
+<p>The Idea starts when a friend told me that I couldn't possibly spent the summer jobless without even doing a little project, After not being able to come up with anything I figured a web page was a simple but
+    challenging project that I could do in my free time, so here I am.</p>
+<p>Im in the limbo of trying to self teach me languages like Japanese and German. (just like I did with English)</p>
+<p>In every action that I do there's a reason behind it, Learning languages and doing this page are one of the few activities that I have started without expecting anything in return,
+    and it's a weird feeling because I don't necessarily know what will come out of it.</p>
+<p>So, I hope you enjoy my page and the content that I will be uploading in the coming months.</p>
+<img src="https://maschinensturmer.neocities.org/stamps/ayumu.gif" width="180" alt="Think different">
+<img src="https://maschinensturmer.neocities.org/stamps/technometal.jpg" width="180" alt="">
+<img src="https://maschinensturmer.neocities.org/blinkies/thankgodfortechno.gif" width="600" alt="Thank God for Techno">
+
+
+
+<div id="lastfm-widget"></div>
+<script>
+const username = "Bedtime2022";  // <-- put your username here
+const apiKey = "d9a0fbd88939ad34bceb0ce81b91126a";
+
+
+async function loadLastFM() {
+  const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${apiKey}&format=json&limit=5`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  
+  const tracks = data.recenttracks.track;
+  let html = "<h2>Music I just listened to</h2><ul style='list-style:none; padding:0;'>";
+  tracks.forEach(t => {
+    const youtubeSearch = `https://www.youtube.com/results?search_query=${encodeURIComponent(t.artist['#text'] + ' ' + t.name)}`;
+    html += `
+      <li style="display:flex; align-items:center; margin-bottom:10px;">
+        <a href="${youtubeSearch}" target="_blank">
+          <img src="${t.image[1]['#text']}" width="34" height="34" 
+               style="vertical-align:middle; margin-right:8px; border-radius:4px;"/>
+        </a>
+        <div>
+          <strong>${t.name}</strong><br/>
+          <small>${t.artist['#text']}</small>
+        </div>
+      </li>`;
+  });
+  html += "</ul>";
+  document.getElementById('lastfm-widget').innerHTML = html;
+}
+document.addEventListener("DOMContentLoaded", loadLastFM);
+</script>
+
+</body>
+
+
+</html>

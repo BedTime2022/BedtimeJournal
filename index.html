@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"> <!-- Add this line -->
+        <title>Mein ウェブサイト</title>
+        <!-- Indie/handwritten font from Google Fonts -->
+
+        <link href="https://fonts.googleapis.com/css2?family=VT323&family=Indie+Flower&display=swap" rel="stylesheet">
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                /* background: repeating-linear-gradient(135deg, #f7e7ce 0 40px, #f3d1bf 40px 80px); */
+            }
+            body {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 20px;
+                color: #2d1e2f;
+                height: 100%;
+        
+    background: #000; /* or any color or image */
+}
+
+            
+            #header-bg {
+                width: 100%;
+                height: 180px;
+                background-image: url('Backgrounds/Banner.png');
+                background-position: center center;
+                background-size: auto;
+                background-repeat: no-repeat;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start; /* Change from center to flex-start */
+                border-bottom: 4px dashed #785f8d;
+                box-shadow: 0 4px 12px #0002;
+                margin-bottom: 19px;
+                padding-top: 2px; /* Add some top padding if needed */
+            }
+            h1, h2 {
+                font-family: 'VT323', 'Indie Flower', monospace, cursive;
+                color: #fff;
+                text-shadow: 2px 2px 0 #785f8d, 4px 4px 8px #0006;
+                margin-top: 0;
+                letter-spacing: 2px;
+            }
+            h1 {
+                margin-top: -5px; /* Reduce from 48px to 0 */
+            }
+            p, li {
+                display: inline-block;
+                background: rgba(255,255,255,0.7);
+                color: #2d1e2f;
+                padding: 8px 16px;
+                border-radius: 12px;
+                margin-bottom: 10px;
+                border: 2px solid #785f8d;
+                font-family: 'Indie Flower', cursive, sans-serif;
+                box-shadow: 2px 2px 0 #f3d1bf;
+            }
+            ul {
+                padding-left: 0;
+                list-style: none;
+            }
+            a {
+                color: #785f8d;
+                text-decoration: none;
+                font-weight: bold;
+                border-bottom: 2px dashed #785f8d;
+                transition: background 0.2s, color 0.2s;
+                padding: 2px 4px;
+                border-radius: 4px;
+            }
+            a:hover {
+                background: #f3d1bf;
+                color: #2d1e2f;
+            }
+            #nav {
+                background: none;
+                margin-bottom: 1vh;
+                margin-top: 20px;
+                font-family: 'VT323', monospace;
+                font-size: 22px;
+            }
+            #player {
+                position: absolute;
+                top: 24px;
+                right: 24px;
+                margin-bottom: 0;
+                text-align: right;
+                z-index: 10;
+            }
+            iframe {
+                width: 100%;
+                height: 80vh; /* or more */
+                border: none;
+                overflow: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header-bg">
+            <h1>Welcome to <b>Mein</b>ウェブサイト</h1>
+            <p style="background:transparent; border:none; box-shadow:none; color:#000000; font-size: 33px;">The purpose of this website is to share fun stuff that I learn and do, so stick along if you are curious!!!!シ</p>
+        </div>
+       <div id="player">
+  <audio controls style="width:130px; height:30px; border-radius:8px; border:2px solid #785f8d; background:#fff8;">
+    <source src="https://dl.dropboxusercontent.com/scl/fi/1of8zzlz0mwrja4ca4nqc/SABBATH.mp3?rlkey=116j73fy2okn9histqmdiv8iw&st=z271ps3l" type="audio/mpeg">
+    Your browser does not support the audio element. 
+  </audio>
+  <p style="font-size:14px; margin:4px 0 0;">the song is 川越-好博 by SABBATH!</p>
+</div>
+        <div id="nav">
+            <b>Navigation:</b>
+            <a href="index_content.html" target="contentFrame">Home</a> |
+            <a href="sucesos.html" target="contentFrame">Sucesos</a> |
+            <a href="Freunde.html" target="contentFrame">Freunde</a> |
+            <a href="Photography.html" target="contentFrame">Photography</a>
+            <a href="Chat.html" target="contentFrame">ウェブチャット</a>
+        </div>
+       <iframe 
+    id="contentFrame" 
+    name="contentFrame" 
+    src="index_content.html" 
+    style="width:100%; border:none;"
+></iframe>
+
+<script>
+  function resizeIframe() {
+    var iframe = document.getElementById('contentFrame');
+    if (iframe && iframe.contentWindow && iframe.contentWindow.document.body) {
+      iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    var iframe = document.getElementById('contentFrame');
+    if (iframe) {
+      iframe.onload = resizeIframe;
+    }
+  });
+</script>
+    </body>
+</html>
+

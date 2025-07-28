@@ -1,0 +1,98 @@
+<html>
+<head>
+    <meta charset="UTF-8"> <!-- Add this line -->
+    <title>Photography Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('Backgrounds/IMG_4565.JPEG');
+            color: #0000008f;
+            font-family: 'VT323', monospace;
+            margin: 0;
+            padding: 24px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 32px;
+            text-shadow: 1px 1px 4px #000;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+        .photo-card {
+            position: relative;
+            width: 320px; /* Increased from 240px */
+            border: 3px dashed #02ff74;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #111;
+            box-shadow: 2px 2px 12px #000a;
+            transition: transform 0.2s;
+        }
+        .photo-card:hover {
+            transform: scale(1.04) rotate(-1deg);
+            border-color: #fff;
+        }
+        .photo-card img {
+            width: 100%;
+            display: block;
+        }
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(34,34,34,0.92);
+            color: #ffd700;
+            font-size: 1.2em; /* Slightly larger */
+            padding: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .photo-card:hover .caption {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://maschinensturmer.neocities.org/stamps/sugoi.png" width="80" alt="Sugoi"> <img src="https://maschinensturmer.neocities.org/stamps/watchingclouds.jpg" width="80" alt="Watching Clouds">
+    <h1>My photo-cards</h1>
+    <div class="gallery">
+        <div class="photo-card">
+            <img src="photos/IMG_5093.jpg" alt="Fireworks"> 
+            <div class="caption">Fireworks at Dorney Park – I love messing around with the colors of the fireworks.</div>
+        </div>
+        <div class="photo-card">
+            <img src="photos/IMG_5269.jpg" alt="Cabin in the woods">
+            <div class="caption">Cabin in the woods – took the photo with my phone.</div>
+        </div>
+        <div class="photo-card">
+            <img src="photos/tree.jpg" alt="Tree in the highway">
+            <div class="caption">Tree in the highway – somewhere in PA.</div>
+        </div>
+        <div class="photo-card">
+            <img src="photos/coolPants.jpg" alt="Cool Pants">
+            <div class="caption">Pants I wore to the BabyMetal concert – somewhere in PA.</div>
+        </div>
+        <div class="photo-card">
+            <img src="photos/sunset.JPEG" alt="Sunset">
+            <div class="caption">A photo I took after a run – Pa.</div>
+        </div>
+        <div class="photo-card">
+            <img src="photos/Pagoda.JPEG" alt="Pagoda">
+            <div class="caption">The Pagoda, sadly wasn't open for the public – Reading, PA.</div>
+        </div>
+        <div class="photo-card">
+            <img src="photos/Hana.JPEG" alt="Hana">
+            <div class="caption">花 – somewhere.</div>
+
+        </div>
+        <!-- Add more photo-cards as needed -->
+    </div>
+</body>
+</html>
