@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Ruby + MisakiGothic example</title>
+<style>
+/* load the font (path is relative to this HTML file) */
+@font-face {
+  font-family: 'MisakiGothic';
+  src: url('/Fonts/k8x123.ttf') format('truetype');
+  font-display: swap;
+}
+
+  html, body {
+    height: 100%;           /* ensure percentage heights work */
+    margin: 0;
+  }
+
+  body {
+    background-image: url('/Backgrounds/Nikki.JPEG');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; /* <--- cover fills to borders, preserving aspect ratio */
+    color: #fff;
+    font-family: 'MisakiGothic', monospace;
+    /* optional: keep content readable on top */
+    -webkit-font-smoothing: antialiased;
+  }
+
+/* sentence container */
+p.sentence {
+  font-size: 42px;            /* kanji size */
+  line-height: 1.5;           /* leave room for furigana above */
+  margin: 16px 0;
+  color: #e99f9f;
+}
+
+/* ruby base text inherits size */
+ruby, rb {
+  font-family: 'MisakiGothic';
+  font-size: inherit;
+  color: inherit;
+}
+
+/* proper furigana style */
+rt {
+  font-family: 'MisakiGothic';
+  font-size: 0.45em;           /* relative to kanji */
+  line-height: 1;
+  ruby-position: over;         /* ensure above */
+}
+
+/* heading style */
+h1 {
+  color: #fff;
+  text-shadow: 1px 1px 4px #302f2f;
+  font-family: 'MisakiGothic', monospace;
+  font-size: 40px;
+}
+
+/* link styles */
+a {
+  font-family: 'MisakiGothic', monospace;
+  color: #ffd4e9;
+  font-size: 30px;
+  text-shadow: 1px 1px 2px pink;
+}
+a:hover {
+  color: #eb6298;
+  text-decoration: underline;
+}
+
+/* paragraph block for description */
+p.desc {
+  display: inline-block;
+  background: rgba(0,0,0,0.5);
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+        
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.photo-card {
+    position: relative;
+    width: auto;       /* card width */
+    height: auto;      /* card height — change as you like */
+    display: flex;      /* center the image inside the card */
+    align-items: center;
+    justify-content: center;
+    border: 3px dashed #2b1819;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #11111100;
+    box-shadow: 2px 2px 12px #000a;
+    transition: transform 0.2s;
+}
+
+.photo-card:hover {
+    transform: scale(1.04) rotate(-1deg);
+    border-color: #ff9dce;
+}
+
+/* Image fits inside the card, keeps aspect ratio and stays centered */
+.photo-card img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;      /* extra safety; not strictly required with max- rules */
+    object-position: center;
+    z-index: 1;
+    background-color: #111;   /* optional, fills the letterbox area */
+}
+
+/* caption sits on top of the image */
+.caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(34,34,34,0.92);
+    color: #dcc9fac2;
+    font-size: 36px;
+    padding: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.photo-card:hover .caption {
+    opacity: 1;
+}
+</style>
+</head>
+<body>
+<a href="#"
+   onclick="parent.document.getElementById('contentFrame').src='Le-fishe.html'; return false;">
+ Le Fishe ページへ戻る
+</a>
+
+<h1>八月九日</h1>
+
+<p class="sentence">
+  <ruby><rb>今日</rb><rt>きょう</rt></ruby>はちょっと
+  <ruby><rb>暇</rb><rt>ひま</rt></ruby>な
+  <ruby><rb>日</rb><rt>ひ</rt></ruby>でした。
+</p>
+<p class="sentence">
+  <ruby><rb>友達</rb><rt>ともだち</rt></ruby>と
+  <ruby><rb>夜</rb><rt>よる</rt></ruby>に
+  ヴォイスチャットでゲームをしたり、
+  <ruby><rb>勉強</rb><rt>べんきょう</rt></ruby>をしたりました。
+</p>
+<p class="sentence">
+  ジェロさんとユンさんとカイさんと
+  <ruby><rb>一緒</rb><rt>いっしょ</rt></ruby>に
+  <ruby><rb>遊</rb><rt>あそ</rt></ruby>びました
+</p>
+    <p class="sentence">
+  <ruby><rb>写真</rb><rt>しゃしん</rt></ruby>を
+  <ruby><rb>取</rb><rt>と</rt></ruby>らなかった、でもカイさん
+  <ruby><rb>取り</rb><rt>と</rt></ruby>ました</p>
+
+
+   <p class="sentence">
+  これはカイさんが
+  <ruby><rb>取</rb><rt>と</rt></ruby>った
+  <ruby><rb>写真</rb><rt>しゃしん</rt></ruby>です、
+  <ruby><rb>私</rb><rt>わたし</rt></ruby>のアバターです！！！
+ 
+  <div class="gallery">
+        <div class="photo-card">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEie-DdL_k4tKDdk-AB6ijMNcriYInNKHRNpA4gaW9PAgD7OHyetKtnpbQvBxTt0_QiFo-sTcCbtbxYxPs9G47jNjjezQJ7XOT7bSpoEMksHix2YKngXq5aKanhKQR-bXkTBLsrBDWpafyolTjrjAIsq9V68TLpEqc-L_nYswqECQqumiuLtM031tBdjdytW" alt="avatar image" style="width: 100%; height: auto;">
+            <div class="caption"><p>カイさんの<ruby>写真<rt>しゃしん</rt></ruby>です</p></div>
+        </div>
+
+
+</body>
+</html>
+
+
+
