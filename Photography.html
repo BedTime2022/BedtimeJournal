@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"> <!-- Add this line -->
+    <meta charset="UTF-8">
     <title>Photography Gallery</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
@@ -26,13 +26,18 @@
         }
         .photo-card {
             position: relative;
-            width: 320px; /* Increased from 240px */
+            width: 320px;
             border: 3px dashed #2b1819;
             border-radius: 12px;
             overflow: hidden;
             background: #111;
             box-shadow: 2px 2px 12px #000a;
-            transition: transform 0.2s;
+            transition: transform 0.25s, opacity 0.25s;
+            opacity: 1;
+        }
+        .photo-card.hidden {
+            opacity: 0;
+            transform: translateY(8px) scale(.99);
         }
         .photo-card:hover {
             transform: scale(1.04) rotate(-1deg);
@@ -49,7 +54,7 @@
             right: 0;
             background: rgba(34,34,34,0.92);
             color: #ffd700;
-            font-size: 1.2em; /* Slightly larger */
+            font-size: 1.2em;
             padding: 14px;
             opacity: 0;
             transition: opacity 0.3s;
@@ -61,83 +66,212 @@
     </style>
 </head>
 <body>
-    <img src="https://maschinensturmer.neocities.org/stamps/sugoi.png" width="200" alt="Sugoi"> <img src="https://maschinensturmer.neocities.org/stamps/watchingclouds.jpg" width="200" alt="Watching Clouds">
+    <img src="https://maschinensturmer.neocities.org/stamps/sugoi.png" width="200" alt="Sugoi">
+    <img src="https://maschinensturmer.neocities.org/stamps/watchingclouds.jpg" width="200" alt="Watching Clouds">
     <h1>My photo-cards</h1>
-    <div class="gallery">
-        <div class="photo-card">
-            <img src="photos/IMG_5093.jpg" alt="Fireworks"> 
+
+    <p style="text-align:center;color:#333;font-size:0.9rem;">
+      Tip: Add <code>data-ts="YYYY-MM-DDTHH:MM:SSZ"</code> to each <code>.photo-card</code>. Newest photos appear first.
+    </p>
+
+    <div class="gallery" id="gallery">
+        <!-- Example photo-cards.
+             Add a data-ts attribute (ISO format) to each .photo-card for reliable ordering:
+             e.g. <div class="photo-card" data-ts="2025-09-29T18:30:00Z"> ... </div>
+        -->
+        <div class="photo-card" data-ts="2025-07-04T20:40:00Z">
+            <img src="photos/IMG_5093.jpg" alt="Fireworks">
             <div class="caption">Fireworks at Dorney Park – I love messing around with the colors of the fireworks.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2025-07-17T12:00:00Z">
             <img src="photos/IMG_5269.jpg" alt="Cabin in the woods">
             <div class="caption">Cabin in the woods – took the photo with my phone.</div>
         </div>
-        <div class="photo-card">
+
+        <!-- This card has no data-ts: script will attempt to parse a date from filename (e.g. IMG_YYYYMMDD). -->
+        <div class="photo-card" data-ts="2025-07-09T12:00:00Z">
             <img src="photos/tree.jpg" alt="Tree in the highway">
             <div class="caption">Tree in the highway – somewhere in PA.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2025-02-14T07:00:00Z">
             <img src="photos/coolPants.jpg" alt="Cool Pants">
             <div class="caption">Pants I wore to the BabyMetal concert – somewhere in PA.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2025-07-11T19:30:00Z">
             <img src="photos/sunset.jpg" alt="Sunset">
             <div class="caption">A photo I took after a run – PA.</div>
         </div>
-        <div class="photo-card">
+
+        <!-- ... keep the rest of your photo-cards as before ... -->
+        <div class="photo-card" data-ts="2025-07-11T10:00:00Z">
             <img src="photos/Pagoda.jpg" alt="Pagoda">
             <div class="caption">The Pagoda, sadly wasn't open for the public – Reading, PA.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2025-01-20T16:00:00Z">
             <img src="photos/Hana.jpg" alt="Hana">
             <div class="caption">花 – somewhere.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2023-03-02T09:00:00Z">
             <img src="photos/DSC00165f.jpg" alt="Paloma">
             <div class="caption">鳩 – A pigeon that got inside my house.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2024-05-04T12:00:00Z">
             <img src="photos/poste.jpg" alt="post">
             <div class="caption">A post near to where I used to live.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2024-08-14T18:30:00Z">
             <img src="photos/hthngy.jpg" alt="shot">
             <div class="caption"> little shot on the street - Allentown, Pa.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2025-01-10T22:15:00Z">
             <img src="photos/bolos.jpg" alt="bawling">
             <div class="caption">A Bawling night - Allentown, Pa</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2024-12-01T11:00:00Z">
             <img src="photos/IMG_0381.jpg" alt="abandoned building">
             <div class="caption">Wind creek - Bethlehem, Pa.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2024-01-10T08:00:00Z">
             <img src="photos/IMG_2666.jpg" alt="trees in the snow">
             <div class="caption">First snow of the 2024 winter season – Allentown, Pa.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2024-12-24T09:00:00Z">
             <img src="photos/IMG_2710.jpg" alt="Park with snow">
             <div class="caption">Park with snow – Allentown, Pa.</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2018-06-07T07:00:00Z">
             <img src="photos/IMG_5178.jpg" alt="Brisa">
             <div class="caption">Dog Brisa - Nicaragua, Masaya</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2018-06-07T07:05:00Z">
             <img src="photos/IMG_5181.jpg" alt="Oddy">
             <div class="caption">Dog Oddy - Nicaragua, Masaya</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2023-03-15T13:00:00Z">
             <img src="photos/Untitled-1.jpg" alt="Laguna de Apoyo">
             <div class="caption">Laguna de Apoyo - Nicaragua</div>
         </div>
-        <div class="photo-card">
+
+        <div class="photo-card" data-ts="2023-09-09T14:00:00Z">
             <img src="photos/G0507475.jpg" alt="Montelimar">
             <div class="caption">Montelimar - Nicaragua.</div>
-
         </div>
-        <!-- Add more photo-cards as needed -->
-    </div>
+        <!-- de aca a abajo son photos nuevas -->
+        <div class="photo-card" data-ts="2024-10-06T03:09:48.078Z">
+            <img src="photos/new photos 1/fxn 2024-10-06 030948.078.jpg" alt="no">
+            <div class="caption">Wind Creek - Bethlehem.</div>
+        </div>
+        <div class="photo-card" data-ts="2024-10-14T07:14:31.616Z">
+            <img src="photos/new photos 1/fxn 2024-10-14 071431.616.jpg" alt="no">
+            <div class="caption">graphity on a garage - Allentown.</div>
+        </div>
+        <div class="photo-card" data-ts="2024-10-06T14:00:00Z">
+            <img src="photos/new photos 1/IMG_0650.jpg" alt="no">
+            <div class="caption">Sayre Park Field - Bethlehem.</div>
+        </div>
+        <div class="photo-card" data-ts="2024-11-09T14:00:00Z">
+            <img src="photos/new photos 1/IMG_1827.jpg" alt="no">
+            <div class="caption">Central Park - New York, NY.</div>
+        </div>
+        <div class="photo-card" data-ts="2025-07-15T14:00:00Z">
+            <img src="photos/new photos 1/IMG_5275.jpg" alt="no">
+            <div class="caption">Flowers - Reading, Pa.</div>
+        </div>
+        <div class="photo-card" data-ts="2025-09-17T14:00:00Z">
+            <img src="photos/new photos 1/IMG_6155.jpg" alt="no">
+            <div class="caption">Grand Plaza - Allentown, Pa.</div>
+        </div>
+        </div>
+
+    <script>
+      /**
+       * Sort the .photo-card elements inside #gallery by newest first.
+       * Preferred: each .photo-card has data-ts (ISO string or ms).
+       * Fallback: attempt to parse YYYYMMDD (or similar) from the image filename.
+       */
+      document.addEventListener('DOMContentLoaded', () => {
+        const gallery = document.getElementById('gallery');
+        if (!gallery) return;
+
+        const cards = Array.from(gallery.querySelectorAll('.photo-card'));
+
+        // helper: parse data-ts or filename
+        function getTimestampForCard(card) {
+          // 1) data-ts attribute
+          const ds = card.getAttribute('data-ts');
+          if (ds) {
+            // accept plain ms or ISO string
+            const num = Number(ds);
+            if (!Number.isNaN(num) && num > 0) return num;
+            const d = new Date(ds);
+            if (!isNaN(d)) return d.getTime();
+          }
+
+          // 2) attempt to extract YYYYMMDD or YYYYMMDDHHMMSS from filename
+          const img = card.querySelector('img');
+          if (img && img.src) {
+            // strip querystring & path parts
+            const filename = img.src.split('/').pop().split('?')[0];
+            // look for long digit sequences (8+ digits)
+            const match = filename.match(/(\d{8,14})/);
+            if (match) {
+              const digits = match[1];
+              try {
+                if (digits.length === 8) {
+                  // YYYYMMDD
+                  const y = digits.slice(0,4), m = digits.slice(4,6), day = digits.slice(6,8);
+                  const date = new Date(`${y}-${m}-${day}T00:00:00Z`);
+                  if (!isNaN(date)) return date.getTime();
+                } else if (digits.length >= 14) {
+                  // YYYYMMDDHHMMSS (take first 14)
+                  const y = digits.slice(0,4), m = digits.slice(4,6), dday = digits.slice(6,8),
+                        hh = digits.slice(8,10), mm = digits.slice(10,12), ss = digits.slice(12,14);
+                  const date = new Date(`${y}-${m}-${dday}T${hh}:${mm}:${ss}Z`);
+                  if (!isNaN(date)) return date.getTime();
+                }
+              } catch(e) {
+                // fallback below
+              }
+            }
+          }
+
+          // 3) last resort: 0 (will end up last)
+          return 0;
+        }
+
+        // annotate and sort
+        const annotated = cards.map(card => {
+          return { card, ts: getTimestampForCard(card) || 0 };
+        });
+
+        annotated.sort((a,b) => b.ts - a.ts); // newest first
+
+        // Reorder DOM: append in sorted order (appendChild moves existing nodes)
+        annotated.forEach((item, idx) => {
+          // small visual nicety: hide then reveal to avoid flash
+          item.card.classList.add('hidden');
+          gallery.appendChild(item.card); // moves card to the end in sorted order
+          // un-hide with a small timeout to trigger transition
+          setTimeout(() => item.card.classList.remove('hidden'), 20 + idx * 20);
+        });
+
+        // optional: if you want perfect "newest at very top" (first child),
+        // we already appended in order newest-first so gallery.firstChild is newest.
+      });
+    </script>
 </body>
 </html>
