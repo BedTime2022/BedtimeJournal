@@ -9,9 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
   <style>
+    /* Register custom font */
+    @font-face {
+      font-family: 'MisakiGothic';
+      src: url('Fonts/k8x123.ttf') format('truetype');
+      font-display: swap;
+    }
+
     /* Body styles */
     body {
-      font-family: 'VT323', monospace;
+      font-family: 'MisakiGothic', 'VT323', monospace;
       font-size: 22px;
       background-image: url(Backgrounds/Chat-Background.jpg);
       background-size: cover;
@@ -37,10 +44,18 @@
       overflow-y: auto;
       padding: 0.5rem;
       margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column; /* keep items in document order (we will prepend) */
+      gap: 0.5rem;
     }
 
     .message {
-      margin: 0.5rem 0;
+      margin: 0;
+      padding: 0.4rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.03);
+      display: block;
+      word-break: break-word;
     }
 
     .message-user {
@@ -91,6 +106,14 @@
       display: block;
       margin-top: 0.3rem;
     }
+
+    .meta-row {
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+      margin-bottom:0.25rem;
+    }
+
   </style>
 
   <!-- Firebase SDKs (compat) -->
@@ -114,7 +137,8 @@
   <h1>チャット / Guestbook</h1>
   <p>Hello!!! This is the Chat/guestbook. You can send messages or media links (images, gifs, YouTube). Thanks for visiting!</p>
 
-  <div id="chat"></div>
+  <div id="chat" aria-live="polite" aria-atomic="true"></div>
+
   <div id="controls">
     <input id="user" type="text" placeholder="Your name">
     <input id="text" type="text" placeholder="Your message (or media URL)">
@@ -127,53 +151,103 @@
     const textInput = document.getElementById('text');
     const sendBtn = document.getElementById('send');
 
-    firebase.database().ref('guestbook')
-      .orderByChild('ts')
-      .limitToLast(200)
-      .on('child_added', snap => {
-        const msg = snap.val();
-        const el = document.createElement('div');
-        el.className = 'message';
-        const time = new Date(msg.ts).toLocaleString();
+    // Reference: newest-last in database, limit 200
+    const chatRef = firebase.database().ref('guestbook').orderByChild('ts').limitToLast(200);
 
-        let content = msg.text;
+    /**
+     * Build and return a message element.
+     * - For plain text messages we set textContent (safe).
+     * - For known embed types (images, video, YouTube) we use controlled innerHTML.
+     */
+    function buildMessageElement(msg) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'message';
 
-        // Image
-        if (/\.(gif|png|jpe?g)$/i.test(msg.text)) {
-          content = `<img src="${msg.text}" class="chat-image">`;
+      // Meta row (user + timestamp)
+      const meta = document.createElement('div');
+      meta.className = 'meta-row';
+      const userSpan = document.createElement('span');
+      userSpan.className = 'message-user';
+      userSpan.textContent = (msg.user || 'Anonymous') + ':';
+      const timeSpan = document.createElement('span');
+      timeSpan.className = 'timestamp';
+      timeSpan.textContent = new Date(msg.ts).toLocaleString();
+
+      meta.appendChild(userSpan);
+      meta.appendChild(timeSpan);
+      wrapper.appendChild(meta);
+
+      // Determine content (image / video / youtube / plain text)
+      const text = (msg.text || '').trim();
+      const contentContainer = document.createElement('div');
+      contentContainer.className = 'message-text';
+
+      if (/\.(gif|png|jpe?g)(\?.*)?$/i.test(text)) {
+        const img = document.createElement('img');
+        img.className = 'chat-image';
+        img.src = text;
+        img.alt = 'User image';
+        contentContainer.appendChild(img);
+      }
+      else if (/\.(mp4|webm)(\?.*)?$/i.test(text)) {
+        const vid = document.createElement('video');
+        vid.className = 'chat-video';
+        vid.src = text;
+        vid.controls = true;
+        vid.autoplay = false;
+        vid.loop = false;
+        contentContainer.appendChild(vid);
+      }
+      else if (/youtu(?:\.be|be\.com)/.test(text)) {
+        const m = text.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+        if (m && m[1]) {
+          const id = m[1];
+          const iframe = document.createElement('iframe');
+          iframe.className = 'chat-iframe';
+          iframe.height = 180;
+          iframe.src = `https://www.youtube.com/embed/${id}`;
+          iframe.frameBorder = 0;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          contentContainer.appendChild(iframe);
+
+          const watchLink = document.createElement('div');
+          watchLink.innerHTML = `<a href="https://youtu.be/${id}" target="_blank" style="color:#fff;font-size:0.8rem;">▶ Watch on YouTube</a>`;
+          contentContainer.appendChild(watchLink);
+        } else {
+          // Fallback to text if no id found
+          contentContainer.textContent = text;
         }
-        // Video
-        else if (/\.(mp4|webm)(\?.*)?$/i.test(msg.text)) {
-          content = `<video src="${msg.text}" class="chat-video" controls autoplay loop muted></video>`;
-        }
-        // YouTube
-        else if (/youtu(?:\.be|be\.com)/.test(msg.text)) {
-          const m = msg.text.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
-          if (m && m[1]) {
-            const id = m[1];
-            content = `
-              <iframe class="chat-iframe" height="180"
-                      src="https://www.youtube.com/embed/${id}"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen></iframe>
-              <div>
-                <a href="https://youtu.be/${id}" target="_blank"
-                   style="color:#fff;font-size:0.8rem;">▶ Watch on YouTube</a>
-              </div>
-            `;
-          }
-        }
+      }
+      else {
+        // Plain text: use textContent to avoid HTML injection
+        contentContainer.textContent = text;
+      }
 
-        el.innerHTML = `
-          <span class="message-user">${msg.user}:</span>
-          <span class="message-text">${content}</span>
-          <span class="timestamp">${time}</span>
-        `;
-        chatBox.append(el);
-        chatBox.scrollTop = chatBox.scrollHeight;
-      });
+      wrapper.appendChild(contentContainer);
+      return wrapper;
+    }
 
+    // When a child is added, prepend it so newest appear at top
+    chatRef.on('child_added', snap => {
+      const msg = snap.val();
+      const el = buildMessageElement(msg);
+      // Prepend new message so newest messages are at the top
+      chatBox.prepend(el);
+      // Optional UX: keep the top visible so latest is obvious
+      // If user is scrolled near the top, keep it pinned to top.
+      if (chatBox.scrollTop <= 20) {
+        chatBox.scrollTop = 0;
+      }
+    });
+
+    // After the initial load of the current set, scroll to top so newest are visible
+    chatRef.once('value', () => {
+      // Give the browser a tick to paint the appended nodes
+      setTimeout(() => chatBox.scrollTop = 0, 50);
+    });
+
+    // Posting logic
     sendBtn.addEventListener('click', () => {
       const user = userInput.value.trim() || 'Anonymous';
       const text = textInput.value.trim();
@@ -186,7 +260,7 @@
     textInput.addEventListener('keyup', e => {
       if (e.key === 'Enter') sendBtn.click();
     });
+
   </script>
 </body>
 </html>
-
