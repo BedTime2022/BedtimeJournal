@@ -1,10 +1,4 @@
 
-/* load the font (path is relative to this HTML file) */
-@font-face {
-  font-family: 'MisakiGothic';
-  src: url('Fonts/k8x123.ttf') format('truetype');
-  font-display: swap;
-}
 
   html, body {
     height: 100%;           /* ensure percentage heights work */
