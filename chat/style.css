@@ -1,0 +1,111 @@
+
+    /* Register custom font */
+    @font-face {
+      font-family: 'MisakiGothic';
+      src: url('/Fonts/k8x123.ttf') format('truetype');
+      font-display: swap;
+    }
+
+    /* Body styles */
+    body {
+      font-family: 'MisakiGothic', 'VT323', monospace;
+      font-size: 22px;
+      background-image: url(/Backgrounds/Chat-Background.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 1rem;
+      color: #fff;
+    }
+
+    /* Title */
+    h1 {
+      text-shadow: 1px 1px 4px #785f8d;
+      text-align: center;
+    }
+    p {
+       color: #5e3a6b; 
+    }
+
+    /* Chat container */
+    #chat {
+      background: rgba(0,0,0,0.7);
+      border: 5px solid #785f8d;
+      height: 67vh;
+      width: auto;
+      overflow-y: auto;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column; /* keep items in document order (we will prepend) */
+      gap: 0.5rem;
+    }
+
+    .message {
+      margin: 0;
+      padding: 0.4rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.03);
+      display: block;
+      word-break: break-word;
+    }
+
+    .message-user {
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    .timestamp {
+      color: #ccc;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+
+    #controls {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    #user, #text {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #send {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background: #785f8d;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #send:hover {
+      background: #5e3a6b;
+    }
+
+    /* Media embeds */
+    .chat-image,
+    .chat-video,
+    .chat-iframe {
+      max-width: 320px;
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+      margin-top: 0.3rem;
+    }
+
+    .meta-row {
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+      margin-bottom:0.25rem;
+    }
+
+ 
