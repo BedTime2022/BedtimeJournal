@@ -2,7 +2,7 @@
     /* Register custom font */
     @font-face {
       font-family: 'MisakiGothic';
-      src: url('/Fonts/k8x123.ttf') format('truetype');
+      src: url(https://bedtime2022.github.io/BedtimeJournal/Fonts/k8x123.ttf) format('truetype');
       font-display: swap;
     }
 
@@ -10,7 +10,7 @@
     body {
       font-family: 'MisakiGothic', 'VT323', monospace;
       font-size: 22px;
-      background-image: url(/Backgrounds/Chat-Background.jpg);
+      background-image: url(https://bedtime2022.github.io/BedtimeJournal/Backgrounds/Chat-Background.jpg );
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
