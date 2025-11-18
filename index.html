@@ -137,21 +137,7 @@
     style="width:100%; border:none;"
 ></iframe>
 
-<script>
-  function resizeIframe() {
-    var iframe = document.getElementById('contentFrame');
-    if (iframe && iframe.contentWindow && iframe.contentWindow.document.body) {
-      iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-    }
-  }
 
-  window.addEventListener('DOMContentLoaded', function() {
-    var iframe = document.getElementById('contentFrame');
-    if (iframe) {
-      iframe.onload = resizeIframe;
-    }
-  });
-</script>
     </body>
 </html>
 
