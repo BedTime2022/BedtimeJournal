@@ -4,67 +4,10 @@
     <meta charset="UTF-8">
     <title>Photography Gallery</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('Backgrounds/photography.JPG');
-            color: #fab9f68f;
-            font-family: 'VT323', monospace;
-            margin: 0;
-            padding: 24px;
-        }
-        h1 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 32px;
-            text-shadow: 1px 1px 4px #000;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            justify-content: center;
-        }
-        .photo-card {
-            position: relative;
-            width: 20%;
-            height: 160%;
-            border: 3px dashed #2b1819;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #111;
-            box-shadow: 2px 2px 12px #000a;
-            transition: transform 0.25s, opacity 0.25s;
-            opacity: 1;
-        }
-        .photo-card.hidden {
-            opacity: 0;
-            transform: translateY(8px) scale(.99);
-        }
-        .photo-card:hover {
-            transform: scale(1.04) rotate(-1deg);
-            border-color: #fff;
-        }
-        .photo-card img {
-            width: 100%;
-            display: block;
-        }
-        .caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(34,34,34,0.92);
-            color: #ffd700;
-            font-size: 1.2em;
-            padding: 14px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        .photo-card:hover .caption {
-            opacity: 1;
-        }
-    </style>
+
+    <!--Style css link-->
+        <link rel="stylesheet" href="styles/Photography.css"> 
+    
 </head>
 <body>
     <img src="https://maschinensturmer.neocities.org/stamps/sugoi.png" width="200" alt="Sugoi">

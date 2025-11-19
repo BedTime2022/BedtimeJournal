@@ -1,0 +1,42 @@
+            html, body {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 20px;
+                color: #2d1e2f;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background-image: url(/Backgrounds/Lefishe.JPEG);
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                font-family: 'VT323', monospace;
+                font-size: 22px;
+                color: #f0f0f0;
+            }
+            h1, h2 {
+                color: #fff;
+                text-shadow: 1px 1px 4px #302f2f;
+                font-family: 'VT323', monospace;
+            }
+            p, li {
+                display: inline-block;
+                background: rgba(0,0,0,0.5);
+                padding: 6px 12px;
+                border-radius: 6px;
+                margin-bottom: 8px;
+                font-family: 'VT323', monospace;
+            }
+            @font-face {
+                font-family: 'MisakiGothic';
+                src: url('/Fonts/k8x12.ttf') format('truetype');
+            }
+            a {
+                font-family: 'MisakiGothic', monospace;
+                color: #ffd4e9;
+                font-size: 30px;
+            }
+            a:hover {
+                color: #eb6298;
+            }
