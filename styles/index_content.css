@@ -1,7 +1,7 @@
             body {
                 font-family: 'VT323', monospace,'Press Start 2P';
                 font-size: 22px;
-                 background-image: url('/Backgrounds/background_second.png');
+                 background-image: url(https://bedtime2022.github.io/BedtimeJournal/Backgrounds/background_second.png);
             }
             h1, h2 {
                 color: #fff;
@@ -11,7 +11,7 @@
             p, li {
                 color: #fff;
                 display: inline-block;
-                background: rgba(0, 0, 0, 0.7);
+                background: rgba(158, 148, 90, 0.493);
                 padding: 6px 12px;
                 border-radius: 6px;
                 margin-bottom: 8px;
