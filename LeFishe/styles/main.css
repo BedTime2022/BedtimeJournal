@@ -6,7 +6,7 @@
   }
 
   body {
-    background-image: url('/Backgrounds/Nikki.JPEG');
+    background-color: #111; /* fallback color */
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover; /* <--- cover fills to borders, preserving aspect ratio */
