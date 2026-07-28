@@ -1,0 +1,58 @@
+            body {
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+    background-image: url(/Backgrounds/my_mind.jpeg);
+    background-size: auto;        /* Scale to cover the viewport */
+    background-repeat: no-repeat;  /* Don’t repeat */
+    background-position: center;   /* Center it */
+    background-attachment: fixed;  /* Optional: keeps it static when scrolling */
+}
+
+            h1, h2 {
+                color: #fff;
+                text-shadow: 1px 1px 4px #785f8d;
+                font-family: 'VT323', monospace;
+            }
+            p, li {
+                color: #fff;
+                display: inline-block;
+                background: rgba(0, 0, 0, 0.7);
+                padding: 6px 12px;
+                border-radius: 6px;
+                margin-bottom: 8px;
+                font-family: 'VT323', monospace;
+            }
+            b {
+                color: crimson;
+            }
+            a {
+                color: #ffd700;
+                font-family: 'VT323', monospace;
+                text-decoration: none;
+                border-bottom: 2px dashed #ffd700;
+                padding: 2px 4px;
+                border-radius: 4px;
+                transition: 
+                    background 0.2s,
+                    color 0.2s,
+                    transform 0.2s;
+                display: inline-block;
+            }
+            a:hover {
+                background: #ffd700;
+                color: #222;
+                transform: translateY(-3px) scale(1.07) rotate(-2deg);
+                border-bottom: 2px solid #ffd700;
+            }
+            #nav {
+                margin-bottom: 16px;
+            }
+            #player {
+                margin-bottom: 16px;
+            }
+            iframe {
+                width: 100%;
+                height: 10vh;
+                border: none;
+                background: transparent;
+            }
